@@ -74,4 +74,5 @@ public class ClinicListActivity extends AppCompatActivity implements SearchView.
         // User changed the text
         return false;
     }
+
 }
