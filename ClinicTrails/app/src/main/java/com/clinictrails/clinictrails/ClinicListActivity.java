@@ -12,6 +12,14 @@ import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -66,7 +74,25 @@ public class ClinicListActivity extends AppCompatActivity implements SearchView.
     @Override
     public boolean onQueryTextSubmit(String query) {
         // User pressed the search button
-        return false;
+        final String url = "https://clinicaltrialapps.herokuapp.com/search";
+        try {
+            final JSONObject jsonReq = new JSONObject("{\"brief_title\"}");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsObj = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                System.out.println(response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        return true;
     }
 
     @Override
