@@ -10,7 +10,7 @@ var express = require("express"),
 
     /*============ MONGOOSE ============*/
     console.log("mongooseURL: " + process.env.MONGOLAB_URI);
-    mongoose.connect(process.env.MONGOLAB_URI || "mongodb://localhost/lumohack");
+    mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/lumohack");
 
     /*============ TEST API CALL ============*/
     // jsonGetCall("https://clinicaltrialsapi.cancer.gov/v1/clinical-trial.json",
