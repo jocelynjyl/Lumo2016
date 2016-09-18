@@ -30,6 +30,6 @@ var express = require("express"),
         res.sendFile(path.join(process.env.PWD, "favicon.ico"));
     });
 
-    app.listen(3000, function(){
-        console.log("Server is listening on port 3000");
+    app.listen(process.env.PORT || 3000, function(){
+        console.log("Server is listening on port " + this.address().port);
     });
