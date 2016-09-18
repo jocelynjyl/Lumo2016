@@ -27,7 +27,7 @@ var express = require("express"),
     });
 
     app.get("/favicon.ico", function(req, res){
-        res.end();
+        res.sendFile(path.join(process.env.PWD, "favicon.ico"));
     });
 
     app.listen(3000, function(){
