@@ -9,7 +9,7 @@ var Location = require(path.join(process.env.PWD, "model", "locationModel")),
 
     router.get("/:id", function(req, res){
         if(!req.params.id) throw new Error("");
-        Review.findOne({_id: req.params.id}).lean().then(function(resp){
+        Review.findOne({_id: req.params.id}).then(function(resp){
             res.send(resp);
         });
     });

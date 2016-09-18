@@ -13,33 +13,75 @@ var Location = require(path.join(process.env.PWD, "model", "locationModel")),
 
 var NCI_API_DOMAIN = "https://clinicaltrialsapi.cancer.gov/v1/clinical-trials";
 var VALID_FIELDS = ["central_contact", "collaborators", "completion_date", "current_trial_status", "current_trial_status_date", "diseases",
-"eligibility", "keywords", "nct_id", "phase", "principal_investigator", "protocol_id", "sites", "start_date"];
+"eligibility", "keywords", "nct_id", "phase", "principal_investigator", "protocol_id", "sites", "start_date", "brief_title"];
+var INCLUDE_FIELDS = ["central_contact", "collaborators", "current_trial_status", "current_trial_status_date", "diseases",
+"eligibility", "keywords", "nct_id", "phase", "principal_investigator", "sites", "start_date", "brief_title"];
 
-    router.get("/:keyword", function(req, res){ // TODO: dummy
-        var url = encodeURI("https://clinicaltrialsapi.cancer.gov/v1/clinical-trials?keywords=" + req.params.keyword);
-        module.exports = jsonGetCall(url,
-            function(resp){
-                res.send(resp);
-            }, function(error){
-                throw new Error("Something went wrong");
-            })
+    router.post("/", [filterSearchFields, flattenSearchFields], function(req, res){
+
+        var body = req.body;
+        var uri = NCI_API_DOMAIN + "?";
+
+        _.each(_.keys(body), function(key, index){
+            uri += (key + "=" + body[key]);
+            if(index !== _.keys(body).length - 1){
+                uri += "&";
+            }
+        });
+
+        _.each(INCLUDE_FIELDS, function(fields, index){
+            uri += ("&include=" + fields);
+        });
+
+        uri = encodeURI(uri);
+        console.log("URI: " + uri);
+
+        jsonGetCall(uri,function(resp){
+            res.send(resp);
+        }, function(error){
+            throw new Error("Something went wrong");
+        });
     });
 
-    router.post("/", filterSearchFields, function(req, res){
-        console.log("you have hit the post route");
-    });
 
     function filterSearchFields(req, res, next){
-        console.log(req.body);
         if(!req.body){
             next();
         } else {
             req.body = _.pick(req.body, function(val, key){
                 return VALID_FIELDS.indexOf(key) !== -1;
             });
-            console.log(req.body);
             next();
         }
+    };
+
+    function flattenObj(obj){
+        var allKeys = _.keys(obj);
+        var flattenedObj = {};
+
+        for(var i = 0; i < allKeys.length; i++){
+            var key = allKeys[i];
+            var val = obj[key];
+            if(typeof val != "object"){
+                flattenedObj[key] = val;
+            } else {
+                flattenedNestedObj = flattenObj(val);
+                var allChildKeys = _.keys(flattenedNestedObj);
+                for(var j = 0; j < allChildKeys.length; j++){
+                    var childKey = allChildKeys[j];
+                    var childVal = flattenedNestedObj[childKey];
+                    flattenedObj[key + "." + childKey] = childVal;
+                }
+            }
+        }
+
+        return flattenedObj;
+    };
+
+    function flattenSearchFields(req, res, next) {
+        var flattenedBody = flattenObj(req.body);
+        req.body = flattenedBody;
+        next();
     };
 
     module.exports = router;
