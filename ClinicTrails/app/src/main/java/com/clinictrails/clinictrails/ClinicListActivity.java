@@ -18,6 +18,9 @@ import java.util.List;
 
 public class ClinicListActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
+    private ArrayList<ClinicTrial> clinicTrialList;
+    private ArrayList<ClinicTrial> queryResultList;
+
     private ListView cliniclv;
 
     @Override
@@ -31,24 +34,18 @@ public class ClinicListActivity extends AppCompatActivity implements SearchView.
         actionBar.setDisplayShowHomeEnabled(true);
 
         // dummy arraylist to remove afterwards
-        ArrayList<ClinicTrial> dummy = new ArrayList<ClinicTrial>();
-        dummy.add(new ClinicTrial("Title", "18+", "ho"));
-        dummy.add(new ClinicTrial("aksjdsakjdsak", "19+", "Vancouver"));
-        dummy.add(new ClinicTrial("laksdklsa", "19+", "Vancouver"));
-        dummy.add(new ClinicTrial("aksjdsakjdsak", "19+", "Vancouver"));
-        dummy.add(new ClinicTrial("aksjdsakjdsak", "19+", "Vancouver"));
-        // instantiate view and attach the adapter
-        ClinicListAdapter adapter = new ClinicListAdapter(this, dummy);
+        clinicTrialList = new ArrayList<ClinicTrial>();
+        clinicTrialList.add(new ClinicTrial("Hormone Therapy with or without Everolimus", "18+", "Burnaby"));
+        clinicTrialList.add(new ClinicTrial("Tamoxifen Citrate, Letrozole, Anastrozole, or Exemestane", "19+", "Vancouver"));
+        clinicTrialList.add(new ClinicTrial("Erlotinib Hydrochloride in Treating Patients", "19+", "Vancouver"));
+        clinicTrialList.add(new ClinicTrial("Crizotinib in Treating Patients", "19+", "Vancouver"));
+        clinicTrialList.add(new ClinicTrial("Doxorubicin Hydrochloride and Cyclophosphamide", "19+", "Vancouver"));
+
+        queryResultList = new ArrayList<ClinicTrial>(clinicTrialList);
+
         cliniclv = (ListView) findViewById(R.id.trialsList);
-        cliniclv.setAdapter(adapter);
-        cliniclv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
-                // start new intent for next activity -- to display full page
-                // Intent appInfo = new Intent(YourActivity.this, newActivity.class);
-                // startActivity(appInfo);
-            }
-        });
+
+        populateListView();
     }
 
     // wait for Jeong to fix since there is no menu_search
@@ -63,10 +60,42 @@ public class ClinicListActivity extends AppCompatActivity implements SearchView.
         return true;
     }
 
+    public void searchClinicTrial(String query) {
+        queryResultList.clear();
+
+        for (int i = 0; i < clinicTrialList.size(); i++) {
+            ClinicTrial trial = clinicTrialList.get(i);
+
+            if(trial.getTitle().toLowerCase().contains(query.toLowerCase())) {
+                queryResultList.add(trial);
+            }
+        }
+    }
+
+    public void populateListView() {
+        // remove adapter bound to ListView object
+        cliniclv.setAdapter(null);
+
+        // instantiate view and attach the adapter
+        ClinicListAdapter adapter = new ClinicListAdapter(this, queryResultList);
+        cliniclv.setAdapter(adapter);
+        cliniclv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
+                // start new intent for next activity -- to display full page
+                // Intent appInfo = new Intent(YourActivity.this, newActivity.class);
+                // startActivity(appInfo);
+            }
+        });
+    }
+
     @Override
     public boolean onQueryTextSubmit(String query) {
         // User pressed the search button
-        return false;
+        searchClinicTrial(query);
+        populateListView();
+
+        return true;
     }
 
     @Override
