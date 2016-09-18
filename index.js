@@ -4,7 +4,9 @@ var express = require("express"),
     app = express(),
     mongoose = require("mongoose"),
     path = require("path"),
-    jsonGetCall = require(path.join(process.env.PWD, "lib", "fns", "jsonGetCall"));
+    jsonGetCall = require("./lib/fns/jsonGetCall");
+
+    console.log("process.env.PWD: " + process.env.PWD);
 
     /*============ MONGOOSE ============*/
     var mongooseURL = process.env.MONGOLAB_URI || "mongodb://localhost/lumohack";
