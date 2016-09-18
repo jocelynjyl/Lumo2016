@@ -18,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -102,6 +103,20 @@ public class ClinicListActivity extends AppCompatActivity implements SearchView.
         JsonObjectRequest jsObj = new JsonObjectRequest(Request.Method.POST, url, jsonReq, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                try{
+                    JSONArray allTrials = response.getJSONArray("trials");
+                    for(int index = 0; index<allTrials.length(); index++){
+                        JSONObject trialObj = allTrials.getJSONObject(index);
+                        Log.d("Trial", trialObj.toString());
+                        String title = trialObj.getString("brief_title");
+                        String age = trialObj.getJSONObject("eligibility").getJSONObject("structured").getInt("min_age_number") + "";
+                        JSONArray sites = trialObj.getJSONArray("sites");
+
+                    }
+                } catch(Exception e) {
+                    Log.e("Error", "Error parsing JSON");
+                    e.printStackTrace();
+                }
                 Log.d("tag", response.toString());
             }
         }, new Response.ErrorListener() {
