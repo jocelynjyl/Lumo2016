@@ -4,6 +4,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import resources.RequestQueueSingleton;
 
 public class ClinicListActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
@@ -86,32 +89,35 @@ public class ClinicListActivity extends AppCompatActivity implements SearchView.
         });
     }
 	
-	private JSONObject retrieveResult (String query) {
-		 final String url = "https://clinicaltrialapps.herokuapp.com/search";
+	private void retrieveResult (String query) {
+        final String url = "https://clinicaltrialapps.herokuapp.com/search";
+        JSONObject jsonReq = null;
         try {
-            final JSONObject jsonReq = new JSONObject("{\"brief_title\":query}");
+            jsonReq = new JSONObject("{\"brief_title\":" + query + "}");
+            Log.d("tag", jsonReq.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        JsonObjectRequest jsObj = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsObj = new JsonObjectRequest(Request.Method.POST, url, jsonReq, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                
+                Log.d("tag", response.toString());
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.d("tag", error.toString());
             }
         });
-		
+
+        RequestQueueSingleton.getInstance(this).addToRequestQueue(jsObj);
 	}
 
     @Override
     public boolean onQueryTextSubmit(String query) {
         // User pressed the search button
-
+        Log.d("TAG", query);
         retrieveResult(query);
         populateListView();
 

@@ -21,7 +21,7 @@ public class RequestQueueSingleton {
 
     public static synchronized RequestQueueSingleton getInstance(Context ctxt) {
         if (instance == null) {
-            instance = new RequestQueueSingleton(context);
+            instance = new RequestQueueSingleton(ctxt);
         }
         return instance;
     }
