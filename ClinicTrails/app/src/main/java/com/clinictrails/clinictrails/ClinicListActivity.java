@@ -1,5 +1,6 @@
 package com.clinictrails.clinictrails;
 
+import android.content.Intent;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -28,7 +29,7 @@ import java.util.List;
 
 import resources.RequestQueueSingleton;
 
-public class ClinicListActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class ClinicListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, SearchView.OnQueryTextListener {
 
     private ArrayList<ClinicTrial> clinicTrialList;
     private ArrayList<ClinicTrial> queryResultList;
@@ -46,16 +47,16 @@ public class ClinicListActivity extends AppCompatActivity implements SearchView.
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
-        // dummy arraylist to remove afterwards
         clinicTrialList = new ArrayList<ClinicTrial>();
         queryResultList = new ArrayList<ClinicTrial>(clinicTrialList);
 
         cliniclv = (ListView) findViewById(R.id.trialsList);
 
         populateListView();
+
+        cliniclv.setOnItemClickListener(this);
     }
 
-    // wait for Jeong to fix since there is no menu_search
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search, menu);
@@ -67,13 +68,12 @@ public class ClinicListActivity extends AppCompatActivity implements SearchView.
         return true;
     }
 
-
     public void populateListView() {
         // remove adapter bound to ListView object
         cliniclv.setAdapter(null);
 
         // instantiate view and attach the adapter
-        adapter = new ClinicListAdapter(this, queryResultList);
+        ClinicListAdapter adapter = new ClinicListAdapter(this, queryResultList);
         cliniclv.setAdapter(adapter);
         cliniclv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -84,8 +84,8 @@ public class ClinicListActivity extends AppCompatActivity implements SearchView.
             }
         });
     }
-	
-	private void retrieveResult (String query) {
+
+    private void retrieveResult (String query) {
         final String url = "https://clinicaltrialapps.herokuapp.com/search";
         JSONObject jsonReq = null;
         try {
@@ -138,22 +138,27 @@ public class ClinicListActivity extends AppCompatActivity implements SearchView.
         });
 
         RequestQueueSingleton.getInstance(this).addToRequestQueue(jsObj);
-	}
-
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        // User pressed the search button
-        Log.d("TAG", query);
-        retrieveResult(query);
-        populateListView();
-
-        return true;
     }
 
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        // User changed the text
-        return false;
-    }
+        @Override
+        public boolean onQueryTextSubmit(String query) {
+            // User pressed the search button
+            retrieveResult(query);
+            populateListView();
 
-}
+            return true;
+        }
+
+        @Override
+        public boolean onQueryTextChange(String newText) {
+            // User changed the text
+            return false;
+        }
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Intent i = new Intent(getBaseContext(), TrialsInfo.class);
+            i.putExtra("TRIAL_INFO", clinicTrialList.get(position));
+            startActivity(i);
+        }
+    }

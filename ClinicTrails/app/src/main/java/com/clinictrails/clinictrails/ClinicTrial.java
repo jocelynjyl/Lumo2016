@@ -1,11 +1,12 @@
 package com.clinictrails.clinictrails;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by stephen on 2016-09-17.
  */
-public class ClinicTrial {
+public class ClinicTrial implements Serializable {
 
     private String title;
     private String age;

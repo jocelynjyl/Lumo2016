@@ -11,4 +11,8 @@ public class Site {
         this.organization = organization;
         this.postalCode = postalCode;
     }
+
+    public String getOrganization() {
+        return organization;
+    }
 }
