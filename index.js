@@ -10,6 +10,7 @@ var express = require("express"),
 
     /*============ MONGOOSE ============*/
     var mongooseURL = process.env.MONGOLAB_URI || "mongodb://localhost/lumohack";
+    console.log("process.env.PWD: " + process.env.PWD);
     mongoose.connect(mongooseURL);
 
     /*============ TEST API CALL ============*/
