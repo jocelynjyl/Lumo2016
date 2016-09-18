@@ -5,13 +5,77 @@
     android:layout_height="match_parent"
     tools:context="com.clinictrails.clinictrails.TrialsInfo">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/relativeLayout"
+        android:paddingTop="10dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:id="@+id/star1"
+                android:src="@drawable/star"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:id="@+id/star2"
+                android:src="@drawable/star"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/star1"
+                android:layout_toEndOf="@+id/star1" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:id="@+id/star4"
+                android:src="@drawable/star"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/star3"
+                android:layout_toEndOf="@+id/star3" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:id="@+id/star3"
+                android:src="@drawable/star"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/star2"
+                android:layout_toEndOf="@+id/star2" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:id="@+id/star5"
+                android:src="@drawable/star"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/star4"
+                android:layout_toEndOf="@+id/star4" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
     <ExpandableListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/expandableListView"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/relativeLayout"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:divider="#9bc2cf"
-        android:dividerHeight="2dp" />
+        android:layout_alignParentBottom="true"
+        android:dividerHeight="-1dp"
+        android:groupIndicator="@null"
+        android:paddingTop="10dp" />
 </RelativeLayout>
