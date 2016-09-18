@@ -24,6 +24,16 @@ var ReviewRouter = require(path.join(process.env.PWD, "controller", "Review")),
     app.use("/reviews", ReviewRouter);
     app.use("/search", SearchRouter);
 
+    app.post("/location/:id/review", function(req, res){
+		Review.create(newReview).then(function(newReview) {
+			newReview.push(newReview);
+			newReview.save().then(function(locationRes) {
+				console.log(locationResp);
+			});
+		res.send (newReview);
+		});
+	});
+	
     /*============ CONNECTION ============*/
     app.get("/", function(req, res){
         res.send("Welcome to the clinical trial app.  Please checkout our Android app.");
