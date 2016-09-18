@@ -1,10 +1,10 @@
 var mongoose = require("mongoose"),
     Schema = mongoose.Schema,
-    path = require("path"); 
+    path = require("path");
 
     var patientSchema = new Schema({
-        username: String,
-        password: String
+        username: {type: String, required: true},
+        password: {type: String, required: true}
     });
 
 module.exports = mongoose.model("Patient", patientSchema);
