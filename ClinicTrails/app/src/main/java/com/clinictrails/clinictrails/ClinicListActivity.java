@@ -7,10 +7,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class ClinicListActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
@@ -42,6 +45,7 @@ public class ClinicListActivity extends AppCompatActivity implements SearchView.
         });
     }
 
+    // wait for Jeong to fix since there is no menu_search
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search, menu);
