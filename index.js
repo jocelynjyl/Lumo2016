@@ -7,7 +7,8 @@ var express = require("express"),
     jsonGetCall = require(path.join(process.env.PWD, "/lib/fns/jsonGetCall")),
     Location = require(path.join(process.env.PWD, "model", "locationModel")),
     Review = require(path.join(process.env.PWD, "model", "reviewModel")),
-    Patient = require(path.join(process.env.PWD, "model", "patientModel"));
+    Patient = require(path.join(process.env.PWD, "model", "patientModel")),
+    populateTestData = require(path.join(process.env.PWD, "/lib/fns/populateTestData"));
 
     console.log("process.env.PWD: " + process.env.PWD);
 
@@ -15,6 +16,7 @@ var express = require("express"),
     mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/lumohack");
 
     /*============ TEST ============*/
+    populateTestData();
 
     /*============ CONNECTION ============*/
     app.get("/", function(req, res){

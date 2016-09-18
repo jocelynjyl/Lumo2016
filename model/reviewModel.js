@@ -1,12 +1,13 @@
 var mongoose = require("mongoose"),
-    Schema = new mongoose.Schema;
+    Schema = mongoose.Schema,
+    path = require("path"); 
 
     var reviewSchema = new Schema({
         content: String,
         rating: Number,
         author: {
             id: {
-                type: Schema.Types.ObjectId,
+                type: mongoose.Schema.Types.ObjectId,
                 ref: "Patient"
             },
             username: String

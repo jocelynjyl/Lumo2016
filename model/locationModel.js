@@ -1,5 +1,6 @@
 var mongoose = require("mongoose"),
-    Schema = new mongoose.Schema;
+    Schema = mongoose.Schema,
+    path = require("path"); 
 
     var locationSchema = new Schema({
         postalCode: String,
