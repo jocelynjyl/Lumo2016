@@ -23,7 +23,14 @@ var mongoose = require("mongoose"),
             username: String
         }
     }, {
-        timestamp: true
+        timestamps: true
+    });
+
+    reviewSchema.pre('save', function(next){
+        if(!this.isNew){
+            this.updatedAt = new Date();
+        }
+        next();
     });
 
 module.exports = mongoose.model("Review", reviewSchema);

@@ -1,36 +1,19 @@
-process.env.PWD = process.cwd();
-
 var express = require("express"),
     app = express(),
-    mongoose = require("mongoose"),
     path = require("path"),
-    bluebird = require("bluebird"),
-    jsonGetCall = require(path.join(process.env.PWD, "/lib/fns/jsonGetCall")),
-
-    Location = require(path.join(process.env.PWD, "model", "locationModel")),
-    Review = require(path.join(process.env.PWD, "model", "reviewModel")),
-    Patient = require(path.join(process.env.PWD, "model", "patientModel")),
     populateTestData = require(path.join(process.env.PWD, "/lib/fns/populateTestData"));
-
-    console.log("process.env.PWD: " + process.env.PWD);
-
-    /*============ MONGOOSE ============*/
-    mongoose.Promise = bluebird;
-    mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/lumohack");
 
     /*============ TEST ============*/
     populateTestData();
 
     /*============ CONNECTION ============*/
     app.get("/", function(req, res){
-        res.send("hello world");
+        res.send("Welcome to the clinical trial app.  Please checkout our Android app.");
     });
 
     app.get("/favicon.ico", function(req, res){
         res.sendFile(path.join(process.env.PWD, "favicon.ico"));
     });
-
-
 
     app.listen(process.env.PORT || 3000, function(){
         console.log("Server is listening on port " + this.address().port);
