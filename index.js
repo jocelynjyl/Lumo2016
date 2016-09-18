@@ -4,12 +4,11 @@ var express = require("express"),
     app = express(),
     mongoose = require("mongoose"),
     path = require("path"),
-    jsonGetCall = require("./lib/fns/jsonGetCall");
+    jsonGetCall = require(path.join(process.env.PWD, "/lib/fns/jsonGetCall"));
 
     console.log("process.env.PWD: " + process.env.PWD);
 
     /*============ MONGOOSE ============*/
-    console.log("mongooseURL: " + process.env.MONGOLAB_URI);
     mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/lumohack");
 
     /*============ TEST API CALL ============*/
@@ -25,6 +24,10 @@ var express = require("express"),
     /*============ CONNECTION ============*/
     app.get("/", function(req, res){
         res.send("hello world");
+    });
+
+    app.get("/favicon.ico", function(req, res){
+        res.end();
     });
 
     app.listen(3000, function(){
