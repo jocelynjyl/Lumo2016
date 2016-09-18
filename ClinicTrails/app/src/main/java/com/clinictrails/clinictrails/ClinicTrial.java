@@ -1,5 +1,7 @@
 package com.clinictrails.clinictrails;
 
+import java.util.List;
+
 /**
  * Created by stephen on 2016-09-17.
  */
@@ -7,28 +9,25 @@ public class ClinicTrial {
 
     private String title;
     private String age;
-    private String location;
     private String description;
     private String eligibility;
     private String objOutline;
     private String phase;
-    private String organization;
+    private List<Site> sites;
 
-    ClinicTrial(String title, String age, String location) {
+    ClinicTrial(String title, String age) {
         this.title = title;
         this.age = age;
-        this.location = location;
     }
 
-    ClinicTrial(String title, String age, String location, String description, String eligibility, String objOutline, String phase, String organization) {
+    ClinicTrial(String title, String age, String description, String eligibility, String objOutline, String phase, List<Site> sites) {
         this.title = title;
         this.age = age;
-        this.location = location;
         this.description = description;
         this.eligibility = eligibility;
         this.objOutline = objOutline;
         this.phase = phase;
-        this.organization = organization;
+        this.sites = sites;
     }
 
     public String getTitle() {
@@ -37,10 +36,6 @@ public class ClinicTrial {
 
     public String getAge() {
         return age;
-    }
-
-    public String getLocation() {
-        return location;
     }
 
     public String getDescription() {
@@ -59,8 +54,5 @@ public class ClinicTrial {
         return phase;
     }
 
-    public String getOrganization() {
-        return organization;
-    }
 
 }

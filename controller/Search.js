@@ -14,8 +14,8 @@ var Location = require(path.join(process.env.PWD, "model", "locationModel")),
 var MAX_SEARCH_ITEM = 5;
 var NCI_API_DOMAIN = "https://clinicaltrialsapi.cancer.gov/v1/clinical-trials";
 var VALID_FIELDS = ["central_contact", "collaborators", "completion_date", "current_trial_status", "current_trial_status_date", "diseases",
-"eligibility", "keywords", "nct_id", "phase", "principal_investigator", "protocol_id", "sites", "start_date", "brief_title"];
-var INCLUDE_FIELDS = ["central_contact", "current_trial_status", "diseases", "eligibility.structured", "nct_id", "phase", "principal_investigator", "sites", "start_date", "brief_title"];
+"eligibility", "keywords", "nct_id", "phase", "principal_investigator", "protocol_id", "sites", "start_date", "brief_title", "brief_summary"];
+var INCLUDE_FIELDS = ["central_contact", "current_trial_status", "eligibility.structured", "nct_id", "phase", "principal_investigator", "sites", "start_date", "brief_title", "brief_summary"];
 
     router.post("/", [filterSearchFields, flattenSearchFields], function(req, res){
 

@@ -110,14 +110,25 @@ public class ClinicListActivity extends AppCompatActivity implements SearchView.
                         Log.d("Trial", trialObj.toString());
                         String title = trialObj.getString("brief_title");
                         String age = trialObj.getJSONObject("eligibility").getJSONObject("structured").getInt("min_age_number") + "";
-                        JSONArray sites = trialObj.getJSONArray("sites");
+
+                        List<Site> sites = new ArrayList<Site>();
+                        JSONArray sitesArr = trialObj.getJSONArray("sites");
+                        for(int i = 0; i < sitesArr.length(); i++){
+                            JSONObject siteObj = sitesArr.getJSONObject(i);
+                            String organization = siteObj.getString("org_name");
+                            String postalCode = siteObj.getString("org_postal_code");
+                            Site site = new Site(organization, postalCode);
+                            sites.add(site);
+                        }
+
+                        
+
 
                     }
                 } catch(Exception e) {
                     Log.e("Error", "Error parsing JSON");
                     e.printStackTrace();
                 }
-                Log.d("tag", response.toString());
             }
         }, new Response.ErrorListener() {
             @Override
