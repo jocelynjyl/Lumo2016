@@ -34,6 +34,7 @@ public class ClinicListActivity extends AppCompatActivity implements SearchView.
     private ArrayList<ClinicTrial> queryResultList;
 
     private ListView cliniclv;
+    ClinicListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +48,6 @@ public class ClinicListActivity extends AppCompatActivity implements SearchView.
 
         // dummy arraylist to remove afterwards
         clinicTrialList = new ArrayList<ClinicTrial>();
-        clinicTrialList.add(new ClinicTrial("Hormone Therapy with or without Everolimus", "18+"));
-        clinicTrialList.add(new ClinicTrial("Tamoxifen Citrate, Letrozole, Anastrozole, or Exemestane", "19+"));
-        clinicTrialList.add(new ClinicTrial("Erlotinib Hydrochloride in Treating Patients", "19+"));
-        clinicTrialList.add(new ClinicTrial("Crizotinib in Treating Patients", "19+"));
-        clinicTrialList.add(new ClinicTrial("Doxorubicin Hydrochloride and Cyclophosphamide", "19+"));
-
         queryResultList = new ArrayList<ClinicTrial>(clinicTrialList);
 
         cliniclv = (ListView) findViewById(R.id.trialsList);
@@ -78,7 +73,7 @@ public class ClinicListActivity extends AppCompatActivity implements SearchView.
         cliniclv.setAdapter(null);
 
         // instantiate view and attach the adapter
-        ClinicListAdapter adapter = new ClinicListAdapter(this, queryResultList);
+        adapter = new ClinicListAdapter(this, queryResultList);
         cliniclv.setAdapter(adapter);
         cliniclv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -103,6 +98,7 @@ public class ClinicListActivity extends AppCompatActivity implements SearchView.
         JsonObjectRequest jsObj = new JsonObjectRequest(Request.Method.POST, url, jsonReq, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                queryResultList.clear();
                 try{
                     JSONArray allTrials = response.getJSONArray("trials");
                     for(int index = 0; index<allTrials.length(); index++){
@@ -126,10 +122,9 @@ public class ClinicListActivity extends AppCompatActivity implements SearchView.
                         String nctID = trialObj.getString("nct_id");
 
                         ClinicTrial trial = new ClinicTrial(title, age, description, phase, sites, nctID);
-
-
-
+                        queryResultList.add(trial);
                     }
+                    adapter.notifyDataSetChanged();
                 } catch(Exception e) {
                     Log.e("Error", "Error parsing JSON");
                     e.printStackTrace();
