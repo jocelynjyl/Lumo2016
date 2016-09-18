@@ -1,10 +1,28 @@
 var express = require("express"),
     app = express(),
     path = require("path"),
+    bodyParser = require("body-parser"),
     populateTestData = require(path.join(process.env.PWD, "/lib/fns/populateTestData"));
+
+var ReviewRouter = require(path.join(process.env.PWD, "controller", "Review")),
+    SearchRouter = require(path.join(process.env.PWD, "controller", "Search"));
 
     /*============ TEST ============*/
     populateTestData();
+
+    /*============ ROUTING ============*/
+    app.use(bodyParser.json());
+    //app.use(bodyParser.urlencoded({extended: true}));
+
+    app.use("", function(req, res, next){
+        console.log("======== CONTENT TYPE =======");
+        console.log(req.get("content-type"));
+        console.log("======== BODY =======");
+        console.log(req.body);
+        next(); 
+    });
+    app.use("/reviews", ReviewRouter);
+    app.use("/search", SearchRouter);
 
     /*============ CONNECTION ============*/
     app.get("/", function(req, res){
