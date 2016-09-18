@@ -31,4 +31,36 @@ public class ClinicTrial {
         this.organization = organization;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getEligibility() {
+        return eligibility;
+    }
+
+    public String getObjOutline() {
+        return objOutline;
+    }
+
+    public String getPhase() {
+        return phase;
+    }
+
+    public String getOrganization() {
+        return organization;
+    }
+
 }

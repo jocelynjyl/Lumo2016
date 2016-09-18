@@ -3,13 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ClinicListActivity">
+    tools:context=".ClinicListActivity"
+    android:gravity="top">
 
     <ListView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/trialsList"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:dividerHeight="2dp"
+        android:foregroundGravity="top"
+        android:divider="#9bc2cf" />
 
 </RelativeLayout>
