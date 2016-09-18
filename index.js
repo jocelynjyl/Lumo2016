@@ -23,6 +23,10 @@ var express = require("express"),
         res.send("hello world");
     });
 
+    app.get("/favicon.ico", function(req, res){
+        res.send(path.join(__dirname, "favicon.ico"));
+    });
+
     app.listen(3000, function(){
         console.log("Server is listening on port 3000");
     });
