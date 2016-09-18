@@ -28,6 +28,7 @@ public class ClinicListAdapter extends ArrayAdapter<ClinicTrial> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.clinic_list_row, parent, false);
         }
+
         // initialize row textviews
         titleText = (TextView) convertView.findViewById(R.id.titleText);
         ageText = (TextView) convertView.findViewById(R.id.ageText);
