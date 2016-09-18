@@ -4,22 +4,17 @@ var express = require("express"),
     app = express(),
     mongoose = require("mongoose"),
     path = require("path"),
-    jsonGetCall = require(path.join(process.env.PWD, "/lib/fns/jsonGetCall"));
+    jsonGetCall = require(path.join(process.env.PWD, "/lib/fns/jsonGetCall")),
+    Location = require(path.join(process.env.PWD, "model", "locationModel")),
+    Review = require(path.join(process.env.PWD, "model", "reviewModel")),
+    Patient = require(path.join(process.env.PWD, "model", "patientModel"));
 
     console.log("process.env.PWD: " + process.env.PWD);
 
     /*============ MONGOOSE ============*/
     mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/lumohack");
 
-    /*============ TEST API CALL ============*/
-    // jsonGetCall("https://clinicaltrialsapi.cancer.gov/v1/clinical-trial.json",
-    //     function(res){
-    //         console.log(res);
-    //     },
-    //     function(error){
-    //         console.log(error);
-    //     }
-    // );
+    /*============ TEST ============*/
 
     /*============ CONNECTION ============*/
     app.get("/", function(req, res){
