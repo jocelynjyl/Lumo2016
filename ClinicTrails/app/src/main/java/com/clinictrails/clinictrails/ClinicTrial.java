@@ -10,24 +10,22 @@ public class ClinicTrial {
     private String title;
     private String age;
     private String description;
-    private String eligibility;
-    private String objOutline;
     private String phase;
     private List<Site> sites;
+    private String nctId;
 
     ClinicTrial(String title, String age) {
         this.title = title;
         this.age = age;
     }
 
-    ClinicTrial(String title, String age, String description, String eligibility, String objOutline, String phase, List<Site> sites) {
+    ClinicTrial(String title, String age, String description, String phase, List<Site> sites, String nctId) {
         this.title = title;
         this.age = age;
         this.description = description;
-        this.eligibility = eligibility;
-        this.objOutline = objOutline;
         this.phase = phase;
         this.sites = sites;
+        this.nctId = nctId;
     }
 
     public String getTitle() {
@@ -42,16 +40,16 @@ public class ClinicTrial {
         return description;
     }
 
-    public String getEligibility() {
-        return eligibility;
-    }
-
-    public String getObjOutline() {
-        return objOutline;
-    }
-
     public String getPhase() {
         return phase;
+    }
+
+    public List<Site> getSites() {
+        return sites;
+    }
+
+    public String getNctId() {
+        return nctId;
     }
 
 

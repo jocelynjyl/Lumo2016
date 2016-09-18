@@ -37,7 +37,6 @@ public class ClinicListAdapter extends ArrayAdapter<ClinicTrial> {
         // set the textviews to their corresponding values
         titleText.setText(ct.get(position).getTitle());
         ageText.setText(ct.get(position).getAge());
-        locationText.setText(ct.get(position).getLocation());
 
         return convertView;
     }
