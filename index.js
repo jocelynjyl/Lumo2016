@@ -9,9 +9,8 @@ var express = require("express"),
     console.log("process.env.PWD: " + process.env.PWD);
 
     /*============ MONGOOSE ============*/
-    var mongooseURL = process.env.MONGOLAB_URI || "mongodb://localhost/lumohack";
-    console.log("mongooseURL: " + mongooseURL);
-    mongoose.connect(mongooseURL);
+    console.log("mongooseURL: " + process.env.MONGOLAB_URI);
+    mongoose.connect(process.env.MONGOLAB_URI || "mongodb://localhost/lumohack");
 
     /*============ TEST API CALL ============*/
     // jsonGetCall("https://clinicaltrialsapi.cancer.gov/v1/clinical-trial.json",
